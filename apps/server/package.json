@@ -1,13 +1,13 @@
 {
-	"name": "server",
+	"name": "@unclocked/server",
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
 		"build": "tsc && tsc-alias",
 		"check-types": "tsc --noEmit",
-		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
-		"dev": "bun run --hot src/index.ts",
-		"start": "bun run dist/src/index.js",
+		"compile": "pnpm build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+		"dev": "pnpm run --hot src/index.ts",
+		"start": "pnpm run dist/src/index.js",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
@@ -29,7 +29,6 @@
 	"devDependencies": {
 		"tsc-alias": "^1.8.16",
 		"typescript": "^5.8.3",
-		"@types/bun": "^1.2.17",
 		"drizzle-kit": "^0.31.2",
 		"@types/pg": "^8.11.11"
 	}

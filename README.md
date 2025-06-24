@@ -44,14 +44,13 @@ Unclocked is a modern, open-source time tracking and project management platform
 - **Mobile**: React Native, Expo
 - **Backend**: Hono, tRPC, PostgreSQL, Drizzle ORM
 - **Authentication**: Better Auth
-- **Runtime**: Bun
+- **Runtime**: NodeJS
 - **Monorepo**: Turborepo
 - **Code Quality**: Biome, Husky, TypeScript
 
 ## 📦 Installation
 
 ### Prerequisites
-- [Bun](https://bun.sh) (v1.2.17 or higher)
 - PostgreSQL (v17 or higher)
 - Node.js (v24 or higher)
 
@@ -65,7 +64,7 @@ cd unclocked
 
 2. **Install dependencies**
 ```bash
-bun install
+pnpm install
 ```
 
 3. **Set up environment variables**
@@ -82,12 +81,12 @@ DATABASE_URL="postgresql://user:password@localhost:5432/unclocked"
 
 5. **Initialize the database**
 ```bash
-bun db:push
+pnpm db:push
 ```
 
 6. **Start the development servers**
 ```bash
-bun dev
+pnpm dev
 ```
 
 The applications will be available at:
@@ -117,16 +116,16 @@ unclocked/
 
 ## 📝 Available Scripts
 
-- `bun dev` - Start all applications in development mode
-- `bun build` - Build all applications
-- `bun dev:web` - Start only the web application
-- `bun dev:native` - Start the React Native/Expo development server
-- `bun dev:server` - Start only the server
-- `bun check-types` - Check TypeScript types across all apps
-- `bun db:push` - Push schema changes to database
-- `bun db:studio` - Open database studio UI
-- `bun db:migrate` - Run database migrations
-- `bun check` - Run Biome formatting and linting
+- `pnpm dev` - Start all applications in development mode
+- `pnpm build` - Build all applications
+- `pnpm dev:web` - Start only the web application
+- `pnpm dev:native` - Start the React Native/Expo development server
+- `pnpm dev:server` - Start only the server
+- `pnpm check-types` - Check TypeScript types across all apps
+- `pnpm db:push` - Push schema changes to database
+- `pnpm db:studio` - Open database studio UI
+- `pnpm db:migrate` - Run database migrations
+- `pnpm check` - Run Biome formatting and linting
 
 ## 🤝 Contributing
 
