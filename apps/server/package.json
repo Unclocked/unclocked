@@ -14,21 +14,22 @@
 		"db:migrate": "drizzle-kit migrate"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.7",
-		"zod": "^3.25.16",
-		"@trpc/server": "^11.4.2",
-		"@trpc/client": "^11.4.2",
+		"@better-auth/expo": "^1.2.10",
 		"@hono/trpc-server": "^0.4.0",
-		"hono": "^4.8.2",
-		"drizzle-orm": "^0.44.2",
-		"pg": "^8.14.1",
+		"@paralleldrive/cuid2": "^2.2.2",
+		"@trpc/client": "^11.4.2",
+		"@trpc/server": "^11.4.2",
 		"better-auth": "^1.2.10",
-		"@better-auth/expo": "^1.2.10"
+		"dotenv": "^16.5.0",
+		"drizzle-orm": "^0.44.2",
+		"hono": "^4.8.2",
+		"pg": "^8.16.2",
+		"zod": "^3.25.67"
 	},
 	"devDependencies": {
-		"tsc-alias": "^1.8.11",
-		"typescript": "^5.8.2",
-		"@types/bun": "^1.2.6",
+		"tsc-alias": "^1.8.16",
+		"typescript": "^5.8.3",
+		"@types/bun": "^1.2.17",
 		"drizzle-kit": "^0.31.2",
 		"@types/pg": "^8.11.11"
 	}
