@@ -4,7 +4,7 @@ import { useEffect, useId, useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { trpc } from "@/utils/trpc";
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute("/_app/dashboard")({
 	component: RouteComponent,
 });
 
@@ -37,7 +37,7 @@ function RouteComponent() {
 	// Mutations using new tRPC integration
 	const createCustomerMutation = useMutation(
 		trpc.customers.create.mutationOptions(),
-	);
+	)
 
 	const handleCreateOrganization = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -47,14 +47,14 @@ function RouteComponent() {
 			const { data } = await authClient.organization.create({
 				name: orgName,
 				slug: orgSlug,
-			});
+			})
 			console.log("Organization created:", data);
 			setOrgName("");
 			setOrgSlug("");
 		} catch (error) {
 			console.error("Failed to create organization:", error);
 		}
-	};
+	}
 
 	const handleCreateCustomer = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -64,14 +64,14 @@ function RouteComponent() {
 			await createCustomerMutation.mutateAsync({
 				name: customerName,
 				organizationId: selectedOrgId,
-			});
+			})
 			console.log("Customer created successfully");
 			setCustomerName("");
 			setSelectedOrgId("");
 		} catch (error) {
 			console.error("Failed to create customer:", error);
 		}
-	};
+	}
 
 	// Set default organization when organizations load
 	useEffect(() => {
@@ -83,10 +83,10 @@ function RouteComponent() {
 	useEffect(() => {
 		if (!session && !isPending) {
 			navigate({
-				to: "/login",
-			});
+				to: "/sign-in",
+			})
 		}
-	}, [session, isPending]);
+	}, [session, isPending, navigate]);
 
 	if (isPending) {
 		return <div>Loading...</div>;
@@ -95,7 +95,7 @@ function RouteComponent() {
 	const currentOrg = organizations?.find((org) => org.id === currentOrgId);
 
 	return (
-		<div className="mx-auto max-w-4xl p-6">
+		<div className="mx-auto max-w-6xl">
 			<h1 className="mb-6 font-bold text-3xl">Dashboard</h1>
 			<p className="mb-4">Welcome {session?.user.name}</p>
 			<p className="mb-4">privateData: {privateData.data?.message}</p>
@@ -244,5 +244,5 @@ function RouteComponent() {
 				</div>
 			)}
 		</div>
-	);
+	)
 }
