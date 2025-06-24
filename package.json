@@ -7,13 +7,13 @@
 		"dev": "turbo dev",
 		"build": "turbo build",
 		"check-types": "turbo check-types",
-		"dev:native": "turbo -F native dev",
-		"dev:web": "turbo -F web dev",
-		"dev:server": "turbo -F server dev",
-		"db:push": "turbo -F server db:push",
-		"db:studio": "turbo -F server db:studio",
-		"db:generate": "turbo -F server db:generate",
-		"db:migrate": "turbo -F server db:migrate"
+		"dev:native": "turbo -F @unclocked/native dev",
+		"dev:web": "turbo -F @unclocked/web dev",
+		"dev:server": "turbo -F @unclocked/server dev",
+		"db:push": "turbo -F @unclocked/server db:push",
+		"db:studio": "turbo -F @unclocked/server db:studio",
+		"db:generate": "turbo -F @unclocked/server db:generate",
+		"db:migrate": "turbo -F @unclocked/server db:migrate"
 	},
 	"dependencies": {},
 	"devDependencies": {
@@ -27,5 +27,9 @@
 			"biome check --write ."
 		]
 	},
-	"packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"packageManager": "bun@1.2.17"
 }
