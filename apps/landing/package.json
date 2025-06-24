@@ -6,9 +6,12 @@
 		"dev": "astro dev",
 		"build": "astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+		"deploy:preview": "pnpm astro build && pnpx wrangler dev",
+		"deploy": "pnpm astro build && pnpx wrangler deploy"
 	},
 	"dependencies": {
+		"@astrojs/cloudflare": "^12.6.0",
 		"@tailwindcss/vite": "^4.1.10",
 		"astro": "^5.10.1",
 		"tailwindcss": "^4.1.10"
