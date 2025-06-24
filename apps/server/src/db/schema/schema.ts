@@ -8,6 +8,10 @@ export const customer = pgTable("customer", {
 		.$defaultFn(() => createId()),
 	organizationId: text("organization_id").references(() => organization.id),
 	name: text("name").notNull(),
+	email: text("email"),
+	phone: text("phone"),
+	address: text("address"),
+	notes: text("notes"),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at")
 		.notNull()

@@ -122,10 +122,12 @@ export default function SignInForm() {
 			</form>
 
 			<div className="mt-4 text-center">
-				<Button variant="link" asChild className="text-indigo-600 hover:text-indigo-800">
-					<Link to="/sign-up">
-						Need an account? Sign Up
-					</Link>
+				<Button
+					variant="link"
+					asChild
+					className="text-indigo-600 hover:text-indigo-800"
+				>
+					<Link to="/sign-up">Need an account? Sign Up</Link>
 				</Button>
 			</div>
 		</div>

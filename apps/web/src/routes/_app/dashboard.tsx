@@ -37,7 +37,7 @@ function RouteComponent() {
 	// Mutations using new tRPC integration
 	const createCustomerMutation = useMutation(
 		trpc.customers.create.mutationOptions(),
-	)
+	);
 
 	const handleCreateOrganization = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -47,14 +47,14 @@ function RouteComponent() {
 			const { data } = await authClient.organization.create({
 				name: orgName,
 				slug: orgSlug,
-			})
+			});
 			console.log("Organization created:", data);
 			setOrgName("");
 			setOrgSlug("");
 		} catch (error) {
 			console.error("Failed to create organization:", error);
 		}
-	}
+	};
 
 	const handleCreateCustomer = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -64,14 +64,14 @@ function RouteComponent() {
 			await createCustomerMutation.mutateAsync({
 				name: customerName,
 				organizationId: selectedOrgId,
-			})
+			});
 			console.log("Customer created successfully");
 			setCustomerName("");
 			setSelectedOrgId("");
 		} catch (error) {
 			console.error("Failed to create customer:", error);
 		}
-	}
+	};
 
 	// Set default organization when organizations load
 	useEffect(() => {
@@ -84,7 +84,7 @@ function RouteComponent() {
 		if (!session && !isPending) {
 			navigate({
 				to: "/sign-in",
-			})
+			});
 		}
 	}, [session, isPending, navigate]);
 
@@ -244,5 +244,5 @@ function RouteComponent() {
 				</div>
 			)}
 		</div>
-	)
+	);
 }

@@ -1,15 +1,15 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { z } from "zod";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/_auth/sign-up")({
 	component: SignUpPage,
@@ -61,10 +61,10 @@ function SignUpPage() {
 	return (
 		<>
 			<div className="flex flex-col space-y-2 text-center">
-				<h1 className="text-2xl font-semibold tracking-tight">
+				<h1 className="font-semibold text-2xl tracking-tight">
 					Create an account
 				</h1>
-				<p className="text-sm text-muted-foreground">
+				<p className="text-muted-foreground text-sm">
 					Enter your information below to create your account
 				</p>
 			</div>
@@ -80,7 +80,9 @@ function SignUpPage() {
 								{...register("name")}
 							/>
 							{errors.name && (
-								<p className="text-sm text-destructive">{errors.name.message}</p>
+								<p className="text-destructive text-sm">
+									{errors.name.message}
+								</p>
 							)}
 						</div>
 						<div className="space-y-2">
@@ -93,7 +95,9 @@ function SignUpPage() {
 								{...register("email")}
 							/>
 							{errors.email && (
-								<p className="text-sm text-destructive">{errors.email.message}</p>
+								<p className="text-destructive text-sm">
+									{errors.email.message}
+								</p>
 							)}
 						</div>
 						<div className="space-y-2">
@@ -105,13 +109,13 @@ function SignUpPage() {
 								{...register("password")}
 							/>
 							{errors.password && (
-								<p className="text-sm text-destructive">{errors.password.message}</p>
+								<p className="text-destructive text-sm">
+									{errors.password.message}
+								</p>
 							)}
 						</div>
 						<Button type="submit" className="w-full" disabled={isLoading}>
-							{isLoading && (
-								<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-							)}
+							{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
 							Create Account
 						</Button>
 					</form>
@@ -159,7 +163,7 @@ function SignUpPage() {
 					</div>
 				</CardContent>
 			</Card>
-			<p className="px-8 text-center text-sm text-muted-foreground">
+			<p className="px-8 text-center text-muted-foreground text-sm">
 				By clicking continue, you agree to our{" "}
 				<Link
 					to="/terms"
@@ -176,7 +180,7 @@ function SignUpPage() {
 				</Link>
 				.
 			</p>
-			<p className="px-8 text-center text-sm text-muted-foreground">
+			<p className="px-8 text-center text-muted-foreground text-sm">
 				Already have an account?{" "}
 				<Link
 					to="/sign-in"

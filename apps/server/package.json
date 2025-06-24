@@ -19,6 +19,7 @@
 		"@paralleldrive/cuid2": "^2.2.2",
 		"@trpc/client": "^11.4.2",
 		"@trpc/server": "^11.4.2",
+		"@unclocked/shared": "workspace:*",
 		"better-auth": "^1.2.10",
 		"dotenv": "^16.5.0",
 		"drizzle-orm": "^0.44.2",

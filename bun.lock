@@ -69,6 +69,7 @@
         "@paralleldrive/cuid2": "^2.2.2",
         "@trpc/client": "^11.4.2",
         "@trpc/server": "^11.4.2",
+        "@unclocked/shared": "workspace:packages/shared",
         "better-auth": "^1.2.10",
         "dotenv": "^16.5.0",
         "drizzle-orm": "^0.44.2",
@@ -102,6 +103,7 @@
         "@trpc/client": "^11.4.2",
         "@trpc/server": "^11.4.2",
         "@trpc/tanstack-react-query": "^11.4.2",
+        "@unclocked/shared": "workspace:packages/shared",
         "better-auth": "^1.2.10",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
@@ -110,6 +112,7 @@
         "radix-ui": "^1.4.2",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
+        "react-hook-form": "^7.58.1",
         "sonner": "^2.0.5",
         "tailwind-merge": "^3.3.1",
         "tw-animate-css": "^1.3.4",
@@ -128,6 +131,16 @@
         "postcss": "^8.5.6",
         "tailwindcss": "^4.1.10",
         "vite": "^6.3.5",
+      },
+    },
+    "packages/shared": {
+      "name": "@unclocked/shared",
+      "version": "0.0.0",
+      "dependencies": {
+        "zod": "^3.25.1",
+      },
+      "devDependencies": {
+        "typescript": "^5.8.3",
       },
     },
   },
@@ -1037,6 +1050,8 @@
     "@unclocked/native": ["@unclocked/native@workspace:apps/native"],
 
     "@unclocked/server": ["@unclocked/server@workspace:apps/server"],
+
+    "@unclocked/shared": ["@unclocked/shared@workspace:packages/shared"],
 
     "@unclocked/web": ["@unclocked/web@workspace:apps/web"],
 

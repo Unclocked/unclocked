@@ -1,3 +1,4 @@
+import { createCustomerSchema } from "@unclocked/shared";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
@@ -19,12 +20,7 @@ export const customersRouter = router({
 			return customers;
 		}),
 	create: protectedProcedure
-		.input(
-			z.object({
-				name: z.string().min(1).max(255),
-				organizationId: z.string(),
-			}),
-		)
+		.input(createCustomerSchema)
 		.mutation(async ({ ctx, input }) => {
 			await auth.api.hasPermission({
 				headers: ctx.headers,
@@ -41,6 +37,10 @@ export const customersRouter = router({
 				.values({
 					name: input.name,
 					organizationId: input.organizationId,
+					email: input.email,
+					phone: input.phone,
+					address: input.address,
+					notes: input.notes,
 				})
 				.returning();
 
