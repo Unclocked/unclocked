@@ -4,7 +4,7 @@ export default {
 	],
 	"*.php": [
 		"vendor/bin/pint",
-		"vendor/bin/phpstan analyze",
+		() => "vendor/bin/phpstan analyze",
 		"vendor/bin/rector process --dry-run",
 	],
 };
