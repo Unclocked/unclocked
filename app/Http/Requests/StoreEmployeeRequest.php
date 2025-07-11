@@ -33,9 +33,7 @@ class StoreEmployeeRequest extends FormRequest
             'user_id' => [
                 'required',
                 'exists:users,id',
-                Rule::unique('employees')->where(function ($query) use ($organization) {
-                    return $query->where('organization_id', $organization->id);
-                })->whereNull('deleted_at'),
+                Rule::unique('employees')->where(fn ($query) => $query->where('organization_id', $organization->id))->whereNull('deleted_at'),
             ],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],

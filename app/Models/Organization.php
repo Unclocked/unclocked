@@ -31,7 +31,7 @@ class Organization extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = ['name', 'slug', 'created_by_id'];
 
@@ -47,7 +47,7 @@ class Organization extends Model
     /**
      * Get the user that created the organization.
      *
-     * @return BelongsTo<User>
+     * @return BelongsTo<User, $this>
      */
     public function createdBy(): BelongsTo
     {
@@ -57,7 +57,7 @@ class Organization extends Model
     /**
      * Get the employees of the organization.
      *
-     * @return HasMany<Employee>
+     * @return HasMany<Employee, $this>
      */
     public function employees(): HasMany
     {

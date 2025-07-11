@@ -19,9 +19,9 @@ createServer((page) =>
 		setup: ({ App, props }) => {
 			/* eslint-disable */
 			// @ts-expect-error
-			// biome-ignore lint/suspicious/noExplicitAny: Ziggy route params can be any type
 			global.route = ((
 				name: RouteName,
+				// biome-ignore lint/suspicious/noExplicitAny: Ziggy route params can be any type
 				params?: Record<string, any>,
 				absolute?: boolean,
 			) =>

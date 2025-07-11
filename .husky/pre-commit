@@ -1,0 +1,6 @@
+# Run lint-staged for file-specific checks
+pnpm exec lint-staged --concurrent true
+
+# Run TypeScript check on the entire project
+echo "Running TypeScript type check..."
+pnpm types

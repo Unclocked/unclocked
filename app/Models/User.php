@@ -64,7 +64,7 @@ class User extends Authenticatable
     /**
      * Get the organizations created by the user.
      *
-     * @return HasMany<Organization>
+     * @return HasMany<Organization, $this>
      */
     public function createdOrganizations(): HasMany
     {
@@ -74,7 +74,7 @@ class User extends Authenticatable
     /**
      * Get the employee records for the user.
      *
-     * @return HasMany<Employee>
+     * @return HasMany<Employee, $this>
      */
     public function employees(): HasMany
     {

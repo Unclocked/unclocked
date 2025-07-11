@@ -4,9 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Unclocked is a Laravel 12 + React 19 application using Inertia.js for seamless frontend/backend integration. It uses TypeScript, TailwindCSS 4, and ShadCN UI components.
+Unclocked is an open-source time tracking SaaS application built as a modern alternative to commercial solutions like Clockodo and TimeCamp. The application provides comprehensive time tracking capabilities for organizations and their employees.
 
-- Unclocked is an opensource SaaS for timetracking (alternative to clockodo)
+### Tech Stack
+- **Backend**: Laravel 12 (PHP 8.4+)
+- **Frontend**: React 19 with TypeScript
+- **Bridge**: Inertia.js for seamless SPA experience
+- **Styling**: TailwindCSS 4 with dark mode support
+- **UI Components**: ShadCN/Radix UI for consistent design
+- **Database**: SQLite (default), easily configurable for MySQL/PostgreSQL
+
+### Core Features
+- Multi-organization support with employee management
+- Time tracking with projects and tasks
+- Reporting and analytics
+- User authentication with email verification
+- Role-based access control
+- Responsive design for desktop and mobile
 
 ## Development Commands
 

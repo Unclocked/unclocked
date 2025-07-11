@@ -30,7 +30,7 @@ class Employee extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'organization_id',
@@ -52,7 +52,7 @@ class Employee extends Model
     /**
      * Get the organization that the employee belongs to.
      *
-     * @return BelongsTo<Organization, Employee>
+     * @return BelongsTo<Organization, $this>
      */
     public function organization(): BelongsTo
     {
@@ -62,7 +62,7 @@ class Employee extends Model
     /**
      * Get the user that the employee belongs to.
      *
-     * @return BelongsTo<User, Employee>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
