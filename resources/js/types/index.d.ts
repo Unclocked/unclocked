@@ -3,6 +3,7 @@ import type { Config } from "ziggy-js";
 
 export interface Auth {
 	user: User;
+	canManageCompany: boolean;
 }
 
 export interface BreadcrumbItem {
@@ -24,10 +25,10 @@ export interface NavItem {
 
 export interface SharedData {
 	name: string;
-	quote: { message: string; author: string };
 	auth: Auth;
 	ziggy: Config & { location: string };
 	sidebarOpen: boolean;
+	activeCompany: App.Data.Resources.CompanyResource;
 	[key: string]: unknown;
 }
 

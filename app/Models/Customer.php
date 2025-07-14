@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CustomerStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,19 +15,21 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property-read string $id
+ * @property-read string $company_id
  * @property-read string $name
- * @property-read string $slug
- * @property-read User $created_by
+ * @property-read string|null $email
+ * @property-read string|null $phone
+ * @property-read string|null $address
+ * @property-read string|null $notes
+ * @property-read CustomerStatus $status
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  * @property-read Carbon|null $deleted_at
- * @property-read Employee[] $employees
- * @property-read Customer[] $customers
+ * @property-read Company $company
  * @property-read Project[] $projects
  */
-class Company extends Model
+class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory, HasUlids, SoftDeletes;
 
     /**
@@ -34,7 +37,7 @@ class Company extends Model
      *
      * @var list<string>
      */
-    protected $fillable = ['name', 'slug', 'created_by_id'];
+    protected $fillable = ['company_id', 'name', 'email', 'phone', 'address', 'notes', 'status'];
 
     /**
      * The attributes that should be cast.
@@ -42,41 +45,22 @@ class Company extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'status' => CustomerStatus::class,
         'created_at' => 'datetime',
     ];
 
     /**
-     * Get the user that created the company.
+     * Get the company that owns the customer.
      *
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<Company, $this>
      */
-    public function createdBy(): BelongsTo
+    public function company(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(Company::class);
     }
 
     /**
-     * Get the employees of the company.
-     *
-     * @return HasMany<Employee, $this>
-     */
-    public function employees(): HasMany
-    {
-        return $this->hasMany(Employee::class);
-    }
-
-    /**
-     * Get the customers of the company.
-     *
-     * @return HasMany<Customer, $this>
-     */
-    public function customers(): HasMany
-    {
-        return $this->hasMany(Customer::class);
-    }
-
-    /**
-     * Get the projects of the company.
+     * Get the projects for the customer.
      *
      * @return HasMany<Project, $this>
      */
