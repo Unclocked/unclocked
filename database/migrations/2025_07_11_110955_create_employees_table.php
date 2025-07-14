@@ -14,18 +14,18 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('organization_id')->constrained('organizations');
+            $table->foreignUlid('company_id')->constrained('companies');
             $table->foreignUlid('user_id')->constrained('users');
             $table->string('name');
             $table->string('email');
-            $table->enum('role', array_column(EmployeeRole::cases(), 'value'))->default(EmployeeRole::Employee->value);
+            $table->enum('role', [EmployeeRole::OWNER, EmployeeRole::ADMIN, EmployeeRole::EMPLOYEE])->default(EmployeeRole::EMPLOYEE);
             $table->timestampsTz();
             $table->softDeletesTz();
 
-            $table->index('organization_id');
+            $table->index('company_id');
             $table->index('user_id');
             $table->index('email');
-            $table->unique(['organization_id', 'user_id'], 'employee_organization_user_unique');
+            $table->unique(['company_id', 'user_id'], 'employee_company_user_unique');
         });
     }
 

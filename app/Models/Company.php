@@ -23,9 +23,9 @@ use Illuminate\Support\Carbon;
  * @property-read Employee[] $employees
  * @property-read User[] $users
  */
-class Organization extends Model
+class Company extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrganizationFactory> */
+    /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory, HasUlids, SoftDeletes;
 
     /**
@@ -45,7 +45,7 @@ class Organization extends Model
     ];
 
     /**
-     * Get the user that created the organization.
+     * Get the user that created the company.
      *
      * @return BelongsTo<User, $this>
      */
@@ -55,7 +55,7 @@ class Organization extends Model
     }
 
     /**
-     * Get the employees of the organization.
+     * Get the employees of the company.
      *
      * @return HasMany<Employee, $this>
      */

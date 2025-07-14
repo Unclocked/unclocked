@@ -2,9 +2,12 @@
 
 namespace App\Enums;
 
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
+#[TypeScript]
 enum EmployeeRole: string
 {
-    case Owner = 'owner';
-    case Admin = 'admin';
-    case Employee = 'employee';
+    case OWNER = 'owner';
+    case ADMIN = 'admin';
+    case EMPLOYEE = 'employee';
 }

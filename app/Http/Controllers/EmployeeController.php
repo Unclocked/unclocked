@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
+use App\Data\Requests\CreateEmployeeData;
+use App\Data\Requests\UpdateEmployeeData;
 use App\Models\Employee;
 
 class EmployeeController extends Controller
@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmployeeRequest $request)
+    public function store(CreateEmployeeData $data)
     {
         //
     }
@@ -51,7 +51,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(UpdateEmployeeData $data, Employee $employee)
     {
         //
     }

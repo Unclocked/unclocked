@@ -14,7 +14,7 @@ class EmployeePolicy
      */
     public function viewAny(User $user): bool
     {
-        // Users can view employees of organizations they belong to
+        // Users can view employees of companies they belong to
         return true;
     }
 
@@ -23,8 +23,8 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee): bool
     {
-        // Users can view employees in their organization
-        return $user->isEmployeeOf($employee->organization);
+        // Users can view employees in their company
+        return $user->isEmployeeOf($employee->company);
     }
 
     /**
@@ -32,7 +32,7 @@ class EmployeePolicy
      */
     public function create(User $user): bool
     {
-        // Check is handled in StoreEmployeeRequest with organization context
+        // Check is handled in CreateEmployeeData with company context
         return true;
     }
 
@@ -41,26 +41,26 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        // Owners and admins can update employees in their organization
-        if (! $user->isEmployeeOf($employee->organization)) {
+        // Owners and admins can update employees in their company
+        if (! $user->isEmployeeOf($employee->company)) {
             return false;
         }
 
-        // Get user's role in the organization
-        $userEmployee = $user->employeeFor($employee->organization);
+        // Get user's role in the company
+        $userEmployee = $user->employeeFor($employee->company);
 
         if (! $userEmployee) {
             return false;
         }
 
         // Owners can update anyone
-        if ($userEmployee->role === EmployeeRole::Owner) {
+        if ($userEmployee->role === EmployeeRole::OWNER) {
             return true;
         }
 
         // Admins can update non-owners
-        if ($userEmployee->role === EmployeeRole::Admin) {
-            return $employee->role !== EmployeeRole::Owner;
+        if ($userEmployee->role === EmployeeRole::ADMIN) {
+            return $employee->role !== EmployeeRole::OWNER;
         }
 
         // Regular employees can only update their own profile
@@ -77,25 +77,25 @@ class EmployeePolicy
             return false;
         }
 
-        // Must be in the same organization
-        if (! $user->isEmployeeOf($employee->organization)) {
+        // Must be in the same company
+        if (! $user->isEmployeeOf($employee->company)) {
             return false;
         }
 
-        $userEmployee = $user->employeeFor($employee->organization);
+        $userEmployee = $user->employeeFor($employee->company);
 
         if (! $userEmployee) {
             return false;
         }
 
         // Owners can delete anyone except themselves
-        if ($userEmployee->role === EmployeeRole::Owner) {
+        if ($userEmployee->role === EmployeeRole::OWNER) {
             return true;
         }
 
         // Admins can delete non-owners
-        if ($userEmployee->role === EmployeeRole::Admin) {
-            return $employee->role !== EmployeeRole::Owner;
+        if ($userEmployee->role === EmployeeRole::ADMIN) {
+            return $employee->role !== EmployeeRole::OWNER;
         }
 
         return false;
@@ -116,6 +116,6 @@ class EmployeePolicy
     public function forceDelete(User $user, Employee $employee): bool
     {
         // Only system admins can permanently delete
-        return $user->role === UserRole::Admin;
+        return $user->role === UserRole::ADMIN;
     }
 }

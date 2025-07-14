@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +19,9 @@ use Illuminate\Notifications\Notifiable;
  * @property-read string $password
  * @property-read string $remember_token
  * @property-read \App\Enums\UserRole $role
- * @property-read \App\Models\Organization[] $createdOrganizations
+ * @property-read string|null $active_company_id
+ * @property-read \App\Models\Company|null $activeCompany
+ * @property-read \App\Models\Company[] $createdCompanies
  * @property-read \App\Models\Employee[] $employees
  */
 class User extends Authenticatable
@@ -35,6 +38,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'active_company_id',
     ];
 
     /**
@@ -57,18 +61,43 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'role' => UserRole::class,
         ];
     }
 
     /**
-     * Get the organizations created by the user.
-     *
-     * @return HasMany<Organization, $this>
+     * Get the user's role.
      */
-    public function createdOrganizations(): HasMany
+    public function getRoleAttribute($value): UserRole
     {
-        return $this->hasMany(Organization::class, 'created_by_id');
+        return UserRole::tryFrom($value) ?? UserRole::USER;
+    }
+
+    /**
+     * Set the user's role.
+     */
+    public function setRoleAttribute($value): void
+    {
+        $this->attributes['role'] = $value instanceof UserRole ? $value->value : $value;
+    }
+
+    /**
+     * Get the user's active company.
+     *
+     * @return BelongsTo<Company, $this>
+     */
+    public function activeCompany(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'active_company_id');
+    }
+
+    /**
+     * Get the companies created by the user.
+     *
+     * @return HasMany<Company, $this>
+     */
+    public function createdCompanies(): HasMany
+    {
+        return $this->hasMany(Company::class, 'created_by_id');
     }
 
     /**
@@ -82,57 +111,86 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the employee record for a specific organization.
+     * Get the employee record for a specific company.
      */
-    public function employeeFor(Organization $organization): ?Employee
+    public function employeeFor(Company $company): ?Employee
     {
         return $this->employees()
-            ->where('organization_id', $organization->id)
+            ->where('company_id', $company->id)
             ->first();
     }
 
     /**
-     * Check if user is an employee of the organization.
+     * Check if user is an employee of the company.
      */
-    public function isEmployeeOf(Organization $organization): bool
+    public function isEmployeeOf(Company $company): bool
     {
         return $this->employees()
-            ->where('organization_id', $organization->id)
+            ->where('company_id', $company->id)
             ->exists();
     }
 
     /**
-     * Check if user has a specific role in the organization.
+     * Check if user has a specific role in the company.
      */
-    public function hasRoleInOrganization(Organization $organization, string $role): bool
+    public function hasRoleInCompany(Company $company, string $role): bool
     {
         return $this->employees()
-            ->where('organization_id', $organization->id)
+            ->where('company_id', $company->id)
             ->where('role', $role)
             ->exists();
     }
 
     /**
-     * Check if user is owner of the organization.
+     * Check if user is owner of the company.
      */
-    public function isOwnerOf(Organization $organization): bool
+    public function isOwnerOf(Company $company): bool
     {
-        return $this->hasRoleInOrganization($organization, 'owner');
+        return $this->hasRoleInCompany($company, 'owner');
     }
 
     /**
-     * Check if user is admin of the organization.
+     * Check if user is admin of the company.
      */
-    public function isAdminOf(Organization $organization): bool
+    public function isAdminOf(Company $company): bool
     {
-        return $this->hasRoleInOrganization($organization, 'admin');
+        return $this->hasRoleInCompany($company, 'admin');
     }
 
     /**
-     * Check if user can manage the organization.
+     * Check if user can manage the company.
      */
-    public function canManageOrganization(Organization $organization): bool
+    public function canManageCompany(Company $company): bool
     {
-        return $this->isOwnerOf($organization) || $this->isAdminOf($organization);
+        return $this->isOwnerOf($company) || $this->isAdminOf($company);
+    }
+
+    /**
+     * Set the user's active company.
+     */
+    public function setActiveCompany(Company $company): void
+    {
+        // Only allow setting active company if user is an employee
+        if (! $this->isEmployeeOf($company)) {
+            throw new \InvalidArgumentException('User must be an employee of the company to set it as active');
+        }
+
+        $this->update(['active_company_id' => $company->id]);
+    }
+
+    /**
+     * Clear the user's active company.
+     */
+    public function clearActiveCompany(): void
+    {
+        $this->update(['active_company_id' => null]);
+    }
+
+    /**
+     * Check if user has an active company.
+     */
+    public function hasActiveCompany(): bool
+    {
+        return $this->active_company_id !== null;
     }
 }

@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\EmployeeRole;
-use App\Models\Organization;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,11 +20,11 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            'organization_id' => Organization::factory(),
+            'company_id' => Company::factory(),
             'user_id' => User::factory(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'role' => fake()->randomElement(EmployeeRole::cases()),
+            'role' => fake()->randomElement([EmployeeRole::OWNER, EmployeeRole::ADMIN, EmployeeRole::EMPLOYEE]),
         ];
     }
 
@@ -34,7 +34,7 @@ class EmployeeFactory extends Factory
     public function owner(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => EmployeeRole::Owner,
+            'role' => EmployeeRole::OWNER,
         ]);
     }
 
@@ -44,7 +44,7 @@ class EmployeeFactory extends Factory
     public function admin(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => EmployeeRole::Admin,
+            'role' => EmployeeRole::ADMIN,
         ]);
     }
 
@@ -54,7 +54,7 @@ class EmployeeFactory extends Factory
     public function employee(): static
     {
         return $this->state(fn (array $attributes) => [
-            'role' => EmployeeRole::Employee,
+            'role' => EmployeeRole::EMPLOYEE,
         ]);
     }
 

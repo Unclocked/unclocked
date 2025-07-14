@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Employee;
-use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class OrganizationSeeder extends Seeder
+class CompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,43 +18,43 @@ class OrganizationSeeder extends Seeder
         $testUser = User::where('email', 'test@example.com')->first();
 
         if ($testUser) {
-            // Create 2 organizations for the test user
-            $testOrganizations = Organization::factory()->count(2)->create([
+            // Create 2 companies for the test user
+            $testCompanies = Company::factory()->count(2)->create([
                 'created_by_id' => $testUser->id,
             ]);
 
-            // Add test user as owner employee in their organizations
-            foreach ($testOrganizations as $org) {
+            // Add test user as owner employee in their companies
+            foreach ($testCompanies as $company) {
                 Employee::factory()
                     ->owner()
                     ->forUser($testUser)
                     ->create([
-                        'organization_id' => $org->id,
+                        'company_id' => $company->id,
                     ]);
 
-                // Add 3-5 employees to each organization
+                // Add 3-5 employees to each company
                 Employee::factory()
                     ->count(rand(3, 5))
                     ->create([
-                        'organization_id' => $org->id,
+                        'company_id' => $company->id,
                     ]);
             }
         }
 
-        // Create 5 more organizations with random owners and employees
+        // Create 5 more companies with random owners and employees
         User::factory()->count(5)->create()->each(function ($user) {
-            // Each user creates 1-2 organizations
-            $organizations = Organization::factory()->count(rand(1, 2))->create([
+            // Each user creates 1-2 companies
+            $companies = Company::factory()->count(rand(1, 2))->create([
                 'created_by_id' => $user->id,
             ]);
 
-            foreach ($organizations as $org) {
+            foreach ($companies as $company) {
                 // Add the creator as owner employee
                 Employee::factory()
                     ->owner()
                     ->forUser($user)
                     ->create([
-                        'organization_id' => $org->id,
+                        'company_id' => $company->id,
                     ]);
 
                 // Add 2-8 additional employees with mixed roles
@@ -65,17 +65,17 @@ class OrganizationSeeder extends Seeder
                     ->admin()
                     ->count(rand(1, min(2, $employeeCount)))
                     ->create([
-                        'organization_id' => $org->id,
+                        'company_id' => $company->id,
                     ]);
 
                 // Add remaining as regular employees
-                $remainingCount = $employeeCount - $org->employees()->count() + 1;
+                $remainingCount = $employeeCount - $company->employees()->count() + 1;
                 if ($remainingCount > 0) {
                     Employee::factory()
                         ->employee()
                         ->count($remainingCount)
                         ->create([
-                            'organization_id' => $org->id,
+                            'company_id' => $company->id,
                         ]);
                 }
             }

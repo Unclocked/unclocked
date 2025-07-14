@@ -2,8 +2,11 @@
 
 namespace App\Enums;
 
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
+#[TypeScript]
 enum UserRole: string
 {
-    case User = 'user';
-    case Admin = 'admin';
+    case USER = 'user';
+    case ADMIN = 'admin';
 }
